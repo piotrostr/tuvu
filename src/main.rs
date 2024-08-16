@@ -1,6 +1,7 @@
 use crossbeam_channel::unbounded;
 use serde::{Deserialize, Serialize};
 use solana_core::tpu::DEFAULT_TPU_COALESCE;
+// use solana_core::validator::Validator;
 use solana_frozen_abi_macro::{frozen_abi, AbiEnumVisitor, AbiExample};
 use solana_gossip::crds_gossip_pull::CrdsFilter;
 use solana_gossip::crds_value::CrdsValue;
@@ -126,30 +127,32 @@ fn main() {
 
     // just gossip bc we got no stake
     node.info.remove_tpu();
-    //node.info.remove_tpu_vote();
     node.info.remove_tpu_forwards();
     node.info.remove_serve_repair();
-    // node.info.remove_repair(); // ?is this ok
+    node.info
+        .set_tvu(SocketAddr::new("127.0.0.1".parse().unwrap(), 8003))
+        .unwrap();
+    node.info.remove_serve_repair(); // ?is this ok
 
     // Validator::print_node_info(&node);
     //
     let _cluster_entrypoints = get_cluster_entrypoints();
 
-    let mut cluster_entrypoints = vec![
+    let cluster_entrypoints = [
         gossip_addr,
-        // "147.75.80.133:8001".parse().unwrap(),
-        // "145.40.97.55:8001".parse().unwrap(),
-        // "74.118.139.147:8001".parse().unwrap(),
-        // "204.16.242.103:8001".parse().unwrap(),
+        "147.75.80.133:8001".parse().unwrap(),
+        "145.40.97.55:8001".parse().unwrap(),
+        "74.118.139.147:8001".parse().unwrap(),
+        "204.16.242.103:8001".parse().unwrap(),
     ];
-    for entrypoint in _cluster_entrypoints.iter().take(5) {
-        match entrypoint.parse::<SocketAddr>() {
-            Ok(entrypoint) => cluster_entrypoints.push(entrypoint),
-            Err(err) => {
-                eprintln!("failed to parse entrypoint: {entrypoint:?} {err:?}");
-            }
-        }
-    }
+    // for entrypoint in _cluster_entrypoints.iter().take(5) {
+    //     match entrypoint.parse::<SocketAddr>() {
+    //         Ok(entrypoint) => cluster_entrypoints.push(entrypoint),
+    //         Err(err) => {
+    //             eprintln!("failed to parse entrypoint: {entrypoint:?} {err:?}");
+    //         }
+    //     }
+    // }
     let cluster_entrypoints = cluster_entrypoints
         .iter()
         .map(ContactInfo::new_gossip_entry_point)
