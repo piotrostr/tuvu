@@ -1,0 +1,17 @@
+[package]
+name = "tuvu"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+crossbeam-channel = "0.5.13"
+serde = "1.0.208"
+serde_json = "1.0.125"
+solana-core = "1.16.0"
+solana-frozen-abi-macro = "2.0.5"
+solana-gossip = "1.16.0"
+solana-net-utils = "1.16.0"
+solana-perf = "1.16.0"
+solana-sdk = "1.16.0"
+solana-streamer = "1.16.0"
+tracing-subscriber = "0.3.18"
