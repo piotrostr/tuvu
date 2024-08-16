@@ -1,6 +1,6 @@
 use crossbeam_channel::unbounded;
 use serde::{Deserialize, Serialize};
-use solana_core::{tpu::DEFAULT_TPU_COALESCE, validator::Validator};
+use solana_core::tpu::DEFAULT_TPU_COALESCE;
 use solana_frozen_abi_macro::{frozen_abi, AbiEnumVisitor, AbiExample};
 use solana_gossip::crds_gossip_pull::CrdsFilter;
 use solana_gossip::crds_value::CrdsValue;
@@ -8,14 +8,9 @@ use solana_gossip::legacy_contact_info::LegacyContactInfo as ContactInfo;
 use solana_gossip::ping_pong::Pong;
 use solana_gossip::{
     cluster_info::{ClusterInfo, Node},
-    duplicate_shred::DuplicateShred,
     gossip_service::GossipService,
-    socketaddr, socketaddr_any,
 };
-use solana_perf::{
-    packet::{Packet, PacketBatch, PacketBatchRecycler},
-    recycler::Recycler,
-};
+use solana_perf::{packet::PacketBatchRecycler, recycler::Recycler};
 use solana_sdk::pubkey::Pubkey;
 use solana_sdk::signature::Signature;
 use solana_sdk::{signature::read_keypair_file, signer::Signer, timing::timestamp};
@@ -24,21 +19,12 @@ use solana_streamer::{
     streamer::{self, StreamerReceiveStats},
 };
 use std::{
-    collections::{HashMap, HashSet},
     io::Read,
-    net::{IpAddr, Ipv4Addr, SocketAddr, TcpStream},
-    path::Path,
-    str::FromStr,
-    sync::{
-        atomic::{AtomicBool, Ordering},
-        Arc, RwLock,
-    },
+    net::SocketAddr,
+    sync::{atomic::AtomicBool, Arc},
     thread::sleep,
-    time::{Duration, Instant},
+    time::Duration,
 };
-use tracing_subscriber;
-
-// use gossip::cli::*;
 
 pub fn get_cluster_entrypoints() -> Vec<String> {
     let entrypoints_response = std::fs::read_to_string("entrypoints.json").unwrap();
