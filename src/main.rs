@@ -203,6 +203,7 @@ fn main() {
     loop {
         if let Ok(packet) = packet_receiver.try_recv() {
             println!("received tvu packet: {packet:?}");
+            panic!("done");
         }
 
         let n_peers = cluster_info.all_peers().len();
