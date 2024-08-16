@@ -99,7 +99,7 @@ fn main() {
     let exit = Arc::new(AtomicBool::new(false));
 
     let args = Args {
-        dynamic_port_range: "1024-65535".to_string(),
+        dynamic_port_range: "8000-8020".to_string(),
         bind_address: "0.0.0.0".to_string(),
     };
     let gossip_host = "127.0.0.1";
