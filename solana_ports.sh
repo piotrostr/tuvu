@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Define the ports
-PORTS="8001 1028 1024 1025 5009"
+PORTS="8001 8002 8003 8004 8005 8006 8007 8008 8009 8010 8011 8012 8013 8014 8015 8016 8017 8018 8019 8020"
 
 open_ports() {
     echo "Opening UDP ports: $PORTS"

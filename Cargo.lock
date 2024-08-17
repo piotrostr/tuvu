@@ -304,9 +304,9 @@ checksum = "9d151e35f61089500b617991b791fc8bfd237ae50cd5950803758a179b41e67a"
 
 [[package]]
 name = "arrayvec"
-version = "0.7.4"
+version = "0.7.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "96d30a06541fbafbc7f82ed10c06164cfbd2c401138f6addd8404629c4b16711"
+checksum = "7c02d123df017efcdfbd739ef81735b36c5ba83ec3c59c80a9d7ecc718f92e50"
 
 [[package]]
 name = "ascii"
@@ -4476,7 +4476,7 @@ dependencies = [
  "solana-bucket-map",
  "solana-config-program",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-measure",
  "solana-metrics",
  "solana-nohash-hasher",
@@ -4508,7 +4508,7 @@ dependencies = [
  "rustc_version",
  "serde",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-program",
  "solana-program-runtime",
  "solana-sdk",
@@ -4530,7 +4530,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-sdk",
 ]
 
@@ -4724,7 +4724,7 @@ dependencies = [
  "solana-cost-model",
  "solana-entry",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-geyser-plugin-manager",
  "solana-gossip",
  "solana-ledger",
@@ -4774,7 +4774,7 @@ dependencies = [
  "solana-compute-budget-program",
  "solana-config-program",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-loader-v4-program",
  "solana-metrics",
  "solana-program-runtime",
@@ -4850,7 +4850,7 @@ dependencies = [
  "serde_bytes",
  "serde_derive",
  "sha2 0.10.8",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "subtle",
  "thiserror",
 ]
@@ -4860,18 +4860,6 @@ name = "solana-frozen-abi-macro"
 version = "1.18.22"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "70088de7d4067d19a7455609e2b393e6086bd847bb39c4d2bf234fc14827ef9e"
-dependencies = [
- "proc-macro2",
- "quote",
- "rustc_version",
- "syn 2.0.74",
-]
-
-[[package]]
-name = "solana-frozen-abi-macro"
-version = "2.0.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "6b698e11abad06b32632b73d62da8327a028c48ff44d2c5afedf7a5015d7e7c5"
 dependencies = [
  "proc-macro2",
  "quote",
@@ -4936,7 +4924,7 @@ dependencies = [
  "solana-client",
  "solana-entry",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-ledger",
  "solana-logger",
  "solana-measure",
@@ -4997,7 +4985,7 @@ dependencies = [
  "solana-cost-model",
  "solana-entry",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-measure",
  "solana-metrics",
  "solana-perf",
@@ -5132,7 +5120,7 @@ dependencies = [
  "rustc_version",
  "serde",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-metrics",
  "solana-rayon-threadlimit",
  "solana-sdk",
@@ -5204,7 +5192,7 @@ dependencies = [
  "sha2 0.10.8",
  "sha3 0.10.8",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-sdk-macro",
  "thiserror",
  "tiny-bip39",
@@ -5232,7 +5220,7 @@ dependencies = [
  "rustc_version",
  "serde",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-measure",
  "solana-metrics",
  "solana-sdk",
@@ -5491,7 +5479,7 @@ dependencies = [
  "solana-config-program",
  "solana-cost-model",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-loader-v4-program",
  "solana-measure",
  "solana-metrics",
@@ -5562,7 +5550,7 @@ dependencies = [
  "sha3 0.10.8",
  "siphasher",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-logger",
  "solana-program",
  "solana-sdk-macro",
@@ -5867,7 +5855,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-sdk",
 ]
 
@@ -5884,7 +5872,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-sdk",
  "solana-vote-program",
  "thiserror",
@@ -5904,7 +5892,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "solana-frozen-abi",
- "solana-frozen-abi-macro 1.18.22",
+ "solana-frozen-abi-macro",
  "solana-metrics",
  "solana-program",
  "solana-program-runtime",
@@ -6863,7 +6851,7 @@ dependencies = [
  "serde",
  "serde_json",
  "solana-core",
- "solana-frozen-abi-macro 2.0.5",
+ "solana-frozen-abi-macro",
  "solana-gossip",
  "solana-net-utils",
  "solana-perf",

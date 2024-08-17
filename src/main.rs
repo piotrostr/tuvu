@@ -1,7 +1,6 @@
 use crossbeam_channel::unbounded;
 use serde::{Deserialize, Serialize};
 use solana_core::tpu::DEFAULT_TPU_COALESCE;
-// use solana_core::validator::Validator;
 use solana_frozen_abi_macro::{frozen_abi, AbiEnumVisitor, AbiExample};
 use solana_gossip::crds_gossip_pull::CrdsFilter;
 use solana_gossip::crds_value::CrdsValue;
@@ -20,7 +19,6 @@ use solana_streamer::{
     streamer::{self, StreamerReceiveStats},
 };
 use std::{
-    io::Read,
     net::SocketAddr,
     sync::{atomic::AtomicBool, Arc},
     thread::sleep,
@@ -108,8 +106,8 @@ fn main() {
     let dynamic_port_range = solana_net_utils::parse_port_range(args.dynamic_port_range.as_str())
         .expect("invalid dynamic_port_range");
 
-    // IP Address        |Age(ms)| Node identifier                              | Version |Gossip|TPUvote| TPU  |TPUfwd| TVU  |TVUfwd|Repair|ServeR|ShredVer
-    // 127.0.0.1       me|  2369 | 4qkukvpiYets78w3pmq5LUm5S8aww6JR1bJwqRenHJD5 | 1.16.0  | 8001 |  none | none | none | 8003 | 8002 | none | none | 56177
+    // IP Address|Age(ms)|Version |Gossip|TPUvote| TPU  |TPUfwd| TVU  |TVUfwd|Repair|ServeR|ShredVer
+    // 127.0.0.1 |  2369 | 1.16.0 | 8001 |  none | none | none | 8003 | 8002 | none | none | 56177
     let mut node = Node::new_with_external_ip(
         &identity_keypair.pubkey(),
         &gossip_addr,
@@ -127,15 +125,15 @@ fn main() {
 
     // just gossip bc we got no stake
     node.info.remove_tpu();
+    // node.info.remove_tpu_vote(); // no longer avb in 1.18.x
     node.info.remove_tpu_forwards();
     node.info.remove_serve_repair();
-    node.info
-        .set_tvu(SocketAddr::new("127.0.0.1".parse().unwrap(), 8003))
-        .unwrap();
+    // node.info
+    //     .set_tvu(SocketAddr::new("127.0.0.1".parse().unwrap(), 8003))
+    //     .unwrap();
     node.info.remove_serve_repair(); // ?is this ok
 
     // Validator::print_node_info(&node);
-    //
     let _cluster_entrypoints = get_cluster_entrypoints();
 
     let cluster_entrypoints = [
@@ -211,8 +209,6 @@ fn main() {
 
         let n_peers = cluster_info.all_peers().len();
         println!("n peers: {n_peers:?}...");
-
-        println!("sleeping...");
         sleep(Duration::from_secs(1));
     }
 }
