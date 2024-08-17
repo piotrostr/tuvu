@@ -25,6 +25,8 @@ use std::{
     time::Duration,
 };
 
+/// get_cluster_entrypoints uses the fetched cluster info to find peers
+/// filters based on shredsVersion and gossip port and whether the nodes are rpc
 pub fn get_cluster_entrypoints() -> Vec<String> {
     let entrypoints_response = std::fs::read_to_string("entrypoints.json").unwrap();
     let entrypoints: serde_json::Value = serde_json::from_str(&entrypoints_response).unwrap();
@@ -102,10 +104,12 @@ fn main() {
         bind_address: "0.0.0.0".to_string(),
     };
     let gossip_host = "127.0.0.1";
-    let gossip_addr = SocketAddr::new(gossip_host.parse().unwrap(), 8001);
+    let gossip_addr = SocketAddr::new(gossip_host.parse().unwrap(), 8007);
     let dynamic_port_range = solana_net_utils::parse_port_range(args.dynamic_port_range.as_str())
         .expect("invalid dynamic_port_range");
 
+    // node will look something like this depending on the automatically set ports
+    // tvu is set to 8007 since on osx 8001 is already in use by other services
     // IP Address|Age(ms)|Version |Gossip|TPUvote| TPU  |TPUfwd| TVU  |TVUfwd|Repair|ServeR|ShredVer
     // 127.0.0.1 |  2369 | 1.16.0 | 8001 |  none | none | none | 8003 | 8002 | none | none | 56177
     let mut node = Node::new_with_external_ip(
@@ -128,29 +132,23 @@ fn main() {
     // node.info.remove_tpu_vote(); // no longer avb in 1.18.x
     node.info.remove_tpu_forwards();
     node.info.remove_serve_repair();
-    // node.info
-    //     .set_tvu(SocketAddr::new("127.0.0.1".parse().unwrap(), 8003))
-    //     .unwrap();
+    node.info
+        .set_tvu(SocketAddr::new("127.0.0.1".parse().unwrap(), 8007))
+        .unwrap();
     node.info.remove_serve_repair(); // ?is this ok
 
     // Validator::print_node_info(&node);
     let _cluster_entrypoints = get_cluster_entrypoints();
 
-    let cluster_entrypoints = [
-        gossip_addr,
-        "147.75.80.133:8001".parse().unwrap(),
-        "145.40.97.55:8001".parse().unwrap(),
-        "74.118.139.147:8001".parse().unwrap(),
-        "204.16.242.103:8001".parse().unwrap(),
-    ];
-    // for entrypoint in _cluster_entrypoints.iter().take(5) {
-    //     match entrypoint.parse::<SocketAddr>() {
-    //         Ok(entrypoint) => cluster_entrypoints.push(entrypoint),
-    //         Err(err) => {
-    //             eprintln!("failed to parse entrypoint: {entrypoint:?} {err:?}");
-    //         }
-    //     }
-    // }
+    let mut cluster_entrypoints = vec![gossip_addr]; // add 'me' validator :3
+    for entrypoint in _cluster_entrypoints.iter().take(10) {
+        match entrypoint.parse::<SocketAddr>() {
+            Ok(entrypoint) => cluster_entrypoints.push(entrypoint),
+            Err(err) => {
+                eprintln!("failed to parse entrypoint: {entrypoint:?} {err:?}");
+            }
+        }
+    }
     let cluster_entrypoints = cluster_entrypoints
         .iter()
         .map(ContactInfo::new_gossip_entry_point)
